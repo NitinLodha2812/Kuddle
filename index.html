@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness slot booking application</title>
+</head>
+<body>
+    <h1>Fitness slot booking application </h1>
+    <h3>Registartion form</h3>
+    <!-- <label>Name</label> -->
+    <form id="bookForm" onsubmit="return increaseBookCount()">  
+    Name: <input type="text" name="name" placeholder="Please enter your name" /> <br/>
+    Email: <input type="text" name="email" placeholder="Please enter your email" /> <br />
+    Mobile no. : <input type="text" name="phno" placeholder="Please enter your mobile number" /> <br />
+    What activities to follow : 
+    Yoga: <input type="checkbox" name="yoga"/>
+    Gym: <input type="checkbox" name="yoga"/>
+    Dance: <input type="checkbox" name="yoga"/>
+    <br />
+   
+    
+    
+   
+</form>
+<form>
+    <input type="text" id="number" value="0"/>
+    <input type="submit" value="Book Now" id="book" onclick="increaseBookCount()"/> <br />
+    
+</form>
+<script>
+    function func(){
+        document.getElementById("book").disabled = true;
+        let data = new FormData(document.getElementById(bookForm));
+        let count = 0;
+        fetch("/book",{method:"POST",body:data})
+        .then((res)=>{
+            if(res.status==200){location.href="/thanks";
+        count++; }
+            else {alert("error");}
+        })
+        .catch((err)=>{alert("error")});
+        return false;
+    }
+    // window.onload = () => {
+    // }
+    document.getElementById("book").disabled = false;
+    if(count == 30){
+        document.getElementById("book").disabled = true
+    }
+    function increaseBookCount(){
+        var value = parseInt(document.getElementById('number').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('number').value = value;}
+
+    function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+    
+</script>
+
+</body>
+</html>
